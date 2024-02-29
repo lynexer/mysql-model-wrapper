@@ -1,25 +1,25 @@
 {
-  "name": "mysql-model-wrapper",
-  "version": "0.0.1",
-  "description": "MySQL wrapper for MVC model syntax",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/lynexer/mysql-model-wrapper.git"
-  },
-  "author": "Kyle Graham <kyle@lynexer.dev>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/lynexer/mysql-model-wrapper/issues"
-  },
-  "homepage": "https://github.com/lynexer/mysql-model-wrapper#readme",
-  "dependencies": {
-    "mysql2": "^3.9.2"
-  },
-  "devDependencies": {
-    "prettier": "^3.2.5"
-  }
+    "name": "mysql-model-wrapper",
+    "version": "0.0.1",
+    "description": "MySQL wrapper for MVC model syntax",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/lynexer/mysql-model-wrapper.git"
+    },
+    "author": "Kyle Graham <kyle@lynexer.dev>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/lynexer/mysql-model-wrapper/issues"
+    },
+    "homepage": "https://github.com/lynexer/mysql-model-wrapper#readme",
+    "dependencies": {
+        "mysql2": "^3.9.2"
+    },
+    "devDependencies": {
+        "prettier": "^3.2.5"
+    }
 }
