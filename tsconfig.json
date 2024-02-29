@@ -9,7 +9,8 @@
         "moduleResolution": "Node",
         "removeComments": false,
         "isolatedModules": true,
-        "outDir": "build/"
+        "outDir": "build/",
+        "skipLibCheck": true
     },
     "exclude": ["node_modules"],
     "include": ["src/"]
