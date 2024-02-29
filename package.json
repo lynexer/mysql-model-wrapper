@@ -2,7 +2,12 @@
     "name": "mysql-model-wrapper",
     "version": "0.0.1",
     "description": "MySQL wrapper for MVC model syntax",
-    "main": "index.js",
+    "main": "build/index.js",
+    "types": "build/index.d.ts",
+    "files": [
+        "build",
+        "README.md"
+    ],
     "scripts": {
         "build": "npx tsc"
     },
