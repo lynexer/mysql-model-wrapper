@@ -1,12 +1,12 @@
 {
     "compilerOptions": {
-        "target": "ES2016",
+        "target": "ES2020",
         "alwaysStrict": true,
         "noUnusedLocals": true,
-        "module": "CommonJS",
+        "module": "Node16",
         "declaration": true,
         "strict": true,
-        "moduleResolution": "Node",
+        "moduleResolution": "Node16",
         "removeComments": false,
         "isolatedModules": true,
         "outDir": "build/",
