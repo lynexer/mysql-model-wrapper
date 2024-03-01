@@ -10,6 +10,8 @@ type WhereInfo = {
     boolean: string;
 };
 
+type WhereColumnParameter = [string, any, any?];
+
 export class Builder {
     protected connection: Connection;
     private table: string = '';
@@ -78,7 +80,7 @@ export class Builder {
     }
 
     public where(
-        column: string | [],
+        column: string | WhereColumnParameter[],
         operator: any = null,
         value: any = null,
         boolean: string = 'and'
@@ -86,7 +88,7 @@ export class Builder {
         let type = 'Basic';
 
         if (typeof column === 'object') {
-            // TODO: Return array of wheres
+            return this.addArrayOfWheres(column, boolean);
         }
 
         column = column as string;
@@ -110,6 +112,33 @@ export class Builder {
         }
 
         this.wheres.push({ type, column, operator, value, boolean });
+
+        return this;
+    }
+
+    protected addArrayOfWheres(
+        columns: WhereColumnParameter[],
+        boolean: string
+    ): this {
+        columns.forEach(column => {
+            if (
+                !Array.isArray(column) ||
+                column.length < 2 ||
+                column.length > 3
+            ) {
+                throw new Error(
+                    'Invalid column format. Expected an array with length 2 or 3.'
+                );
+            }
+
+            const [fieldName, operator, value] = column;
+
+            if (typeof fieldName !== 'string') {
+                throw new Error('Column element must be a string.');
+            }
+
+            this.where(fieldName, operator, value || null, boolean);
+        });
 
         return this;
     }
