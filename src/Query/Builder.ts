@@ -77,4 +77,12 @@ export class Builder {
         console.log(query);
         return await this.connection.query(query);
     }
+
+    protected invalidOperator(operator: string): boolean {
+        return typeof operator !== 'string' || !(operator in this.operators);
+    }
+
+    protected isBitwiseOperator(operator: string): boolean {
+        return operator in this.bitwiseOperators;
+    }
 }
