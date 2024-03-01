@@ -6,6 +6,43 @@ export class Builder {
     private table: string = '';
     private selects: string[] = ['*'];
 
+    public bitwiseOperators: string[] = ['&', '|', '^', '<<', '>>', '&~'];
+    public operators: string[] = [
+        '=',
+        '<',
+        '>',
+        '<=',
+        '>=',
+        '<>',
+        '!=',
+        '<=>',
+        'like',
+        'like binary',
+        'not like',
+        'ilike',
+        '&',
+        '|',
+        '^',
+        '<<',
+        '>>',
+        '&~',
+        'is',
+        'is not',
+        'rlike',
+        'not rlike',
+        'regexp',
+        'not regexp',
+        '~',
+        '~*',
+        '!~',
+        '!~*',
+        'similar to',
+        'not similar to',
+        'not ilike',
+        '~~*',
+        '!~~*'
+    ];
+
     constructor(connection: Connection) {
         this.connection = connection;
     }
