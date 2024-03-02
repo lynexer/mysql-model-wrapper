@@ -154,9 +154,7 @@ export class Builder {
     }
 
     public async get(): Promise<[RowDataPacket[], FieldPacket[]]> {
-        let query = `SELECT ${this.selects.join(',')} FROM ${this.table}`;
-        console.log(query);
-        return await this.connection.query(query);
+        return await this.connection.execute(this.toSql(), this.getBindings());
     }
 
     public getBindings(): any[] {
