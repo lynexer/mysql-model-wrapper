@@ -158,6 +158,15 @@ export class Builder {
         return this.where(column, operator, value, 'or');
     }
 
+    public whereNot(
+        column: string,
+        operator: any = null,
+        value: any = null,
+        boolean: string = 'and'
+    ): this {
+        return this.where(column, operator, value, boolean + ' not');
+    }
+
     // TODO: Added Basic Where Clauses:
     // Where, OrWhere, WhereNot, WhereBetween, WhereIn,
     // WhereNotIn, WhereNull, WhereNotNull, WhereDate,
