@@ -164,6 +164,7 @@ export class Builder {
         value: any = null,
         boolean: string = 'and'
     ): this {
+        // TODO: Add WhereColumnParameter[] support
         return this.where(column, operator, value, boolean + ' not');
     }
 
