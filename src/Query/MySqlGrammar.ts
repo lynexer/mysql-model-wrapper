@@ -13,6 +13,10 @@ export class MySqlGrammar {
 
     protected selectComponents: string[] = ['selects', 'table', 'wheres'];
 
+    protected concatenate(segments: string[]): string {
+        return segments.filter(value => value !== '').join(' ');
+    }
+
     public getTablePrefix(): string {
         return this.tablePrefix;
     }
