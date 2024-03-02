@@ -15,6 +15,50 @@ export class MySqlGrammar {
 
     protected selectComponents: string[] = ['selects', 'table', 'wheres'];
 
+    public compileSelect(query: QueryBuilder): string {
+        const original = query.selects;
+
+        if (query.selects === null || query.selects.length === 0) {
+            query.selects = ['*'];
+        }
+
+        let sql = this.concatenate(
+            Object.values(this.compileComponents(query))
+        ).trim();
+
+        query.selects = original;
+
+        return sql;
+    }
+
+    protected compileComponents(query: QueryBuilder): {
+        [key: string]: string;
+    } {
+        let sql: { [key: string]: string } = {};
+
+        this.selectComponents.forEach((component: string) => {
+            if (component === 'selects') {
+                sql[component] = this.compileColumns(query, query.selects);
+            } else if (component === 'table') {
+                sql[component] = this.compileFrom(query, query.table);
+            } else if (component === 'wheres') {
+                sql[component] = this.compileWheres(query);
+            }
+        });
+
+        return sql;
+    }
+
+    protected compileColumns(query: QueryBuilder, selects: string[]): string {
+        // TODO: Check if using select distinct
+
+        return `select ${this.columnize(selects)}`;
+    }
+
+    protected compileFrom(query: QueryBuilder, table: string): string {
+        return `from ${this.wrapTable(table)}`;
+    }
+
     public wrap(value: string): string {
         if (value.includes(' as ')) {
             return this.wrapAliasedValue(value);
