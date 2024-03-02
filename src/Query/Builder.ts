@@ -1,14 +1,7 @@
 import { FieldPacket, RowDataPacket } from 'mysql2/promise';
 import { Connection } from '../Connection';
 import { InvalidArgumentException } from '../Support/Exceptions/InvalidArgumentException';
-
-type WhereInfo = {
-    type: string;
-    column: string;
-    operator: string;
-    value: any;
-    boolean: string;
-};
+import { MySqlGrammar, WhereInfo } from './MySqlGrammar';
 
 type WhereColumnParameter = [string, any, any?];
 
