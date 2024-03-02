@@ -1,3 +1,5 @@
+import { Builder as QueryBuilder } from './Builder';
+
 export type WhereInfo = {
     type: string;
     column: string;
@@ -58,6 +60,45 @@ export class MySqlGrammar {
                     : this.wrapValue(value);
             })
             .join('.');
+    }
+
+    public compileWheres(query: QueryBuilder): string {
+        if (query.wheres.length === 0) {
+            return '';
+        }
+
+        let sql = this.compileWheresToArray(query);
+
+        if (sql.length > 0) {
+            return this.concatenateWhereClauses(query, sql);
+        }
+
+        return '';
+    }
+
+    protected compileWheresToArray(query: QueryBuilder): string[] {
+        return query.wheres.map((where: WhereInfo) => {
+            // TODO: Choose correct where method depending on type
+            return where.boolean + ' ' + this.whereBasic(query, where);
+        });
+    }
+
+    protected concatenateWhereClauses(
+        query: QueryBuilder,
+        sql: string[]
+    ): string {
+        return 'where ' + this.removeLeadingBoolean(sql.join(' '));
+    }
+
+    protected whereBasic(query: QueryBuilder, where: WhereInfo): string {
+        let value = '?';
+        let operator = where.operator.replace('?', '??');
+
+        return `${this.wrap(where.column)} ${operator} ${value}`;
+    }
+
+    protected whereBitwise(query: QueryBuilder, where: WhereInfo): string {
+        return this.whereBasic(query, where);
     }
 
     protected wrapValue(value: string): string {
