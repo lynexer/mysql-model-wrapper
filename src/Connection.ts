@@ -37,6 +37,14 @@ export class Connection {
 
     public async query(sql: string): Promise<[RowDataPacket[], FieldPacket[]]> {
         this.ensureConnection();
-        return await this.conn.query<RowDataPacket[]>(sql);
+        return await this.conn.query(sql);
+    }
+
+    public async execute(
+        sql: string,
+        bindings: any[]
+    ): Promise<[RowDataPacket[], FieldPacket[]]> {
+        this.ensureConnection();
+        return await this.conn.execute(sql, bindings);
     }
 }
