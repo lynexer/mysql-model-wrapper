@@ -22,4 +22,8 @@ export class MySqlGrammar {
 
         return this;
     }
+
+    protected removeLeadingBoolean(value: string): string {
+        return value.replace(/and |or /i, '');
+    }
 }
