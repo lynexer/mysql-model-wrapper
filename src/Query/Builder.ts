@@ -7,9 +7,9 @@ type WhereColumnParameter = [string, any, any?];
 
 export class Builder {
     protected connection: Connection;
-    private table: string = '';
-    private selects: string[] = ['*'];
-    private wheres: WhereInfo[] = [];
+    public table: string = '';
+    public selects: string[] = ['*'];
+    public wheres: WhereInfo[] = [];
 
     public bitwiseOperators: string[] = ['&', '|', '^', '<<', '>>', '&~'];
     public operators: string[] = [
