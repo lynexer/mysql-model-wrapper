@@ -12,6 +12,10 @@ export class Builder {
     public selects: string[] = ['*'];
     public wheres: WhereInfo[] = [];
 
+    public bindings: { [key: string]: any[] } = {
+        where: []
+    };
+
     public bitwiseOperators: string[] = ['&', '|', '^', '<<', '>>', '&~'];
     public operators: string[] = [
         '=',
@@ -108,6 +112,8 @@ export class Builder {
 
         this.wheres.push({ type, column, operator, value, boolean });
 
+        this.addBinding(value, 'where');
+
         return this;
     }
 
@@ -147,6 +153,35 @@ export class Builder {
         let query = `SELECT ${this.selects.join(',')} FROM ${this.table}`;
         console.log(query);
         return await this.connection.query(query);
+    }
+
+    public getBindings(): any[] {
+        return Object.values(this.bindings).reduce(
+            (accumulator, value) => accumulator.concat(value),
+            []
+        );
+    }
+
+    public addBinding(value: any, type: string = 'where'): this {
+        if (!(type in this.bindings)) {
+            throw new InvalidArgumentException(`Invalid binding type: ${type}`);
+        }
+
+        if (Array.isArray(value)) {
+            this.bindings[type] = [
+                ...this.bindings[type],
+                ...value.map(this.castBinding.bind(this))
+            ];
+        } else {
+            this.bindings[type].push(this.castBinding(value));
+        }
+
+        return this;
+    }
+
+    // TODO: Add more casting
+    public castBinding(value: any): any {
+        return value;
     }
 
     protected prepareValueAndOperator(
