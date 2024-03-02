@@ -68,6 +68,9 @@ export class MySqlGrammar {
         return value;
     }
 
+    public columnize(columns: string[]): string {
+        return columns.map(this.wrap.bind(this)).join(', ');
+    }
 
     protected concatenate(segments: string[]): string {
         return segments.filter(value => value !== '').join(' ');
