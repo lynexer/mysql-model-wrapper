@@ -13,6 +13,15 @@ export class MySqlGrammar {
 
     protected selectComponents: string[] = ['selects', 'table', 'wheres'];
 
+    protected wrapValue(value: string): string {
+        if (value !== '*') {
+            return '`' + value.replace(/"/g, '""') + '`';
+        }
+
+        return value;
+    }
+
+
     protected concatenate(segments: string[]): string {
         return segments.filter(value => value !== '').join(' ');
     }
