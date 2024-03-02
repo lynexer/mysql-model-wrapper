@@ -13,6 +13,53 @@ export class MySqlGrammar {
 
     protected selectComponents: string[] = ['selects', 'table', 'wheres'];
 
+    public wrap(value: string): string {
+        if (value.includes(' as ')) {
+            return this.wrapAliasedValue(value);
+        }
+
+        return this.wrapSegments(value.split('.'));
+    }
+
+    public wrapTable(table: string): string {
+        if (table.includes(' as ')) {
+            return this.wrapAliasedTable(table);
+        }
+
+        if (table.includes('.')) {
+            table = table.replace(/\.(?=[^.]*$)/, '.' + this.tablePrefix);
+
+            return table
+                .split('.')
+                .map((value: string) => this.wrapValue(value))
+                .join('.');
+        }
+
+        return this.wrapValue(this.tablePrefix + table);
+    }
+
+    protected wrapAliasedValue(value: string): string {
+        const segments: string[] = value.split(/\s+as\s+/i);
+
+        return `${this.wrap(segments[0])} as ${this.wrapValue(segments[1])}`;
+    }
+
+    protected wrapAliasedTable(value: string): string {
+        const segments: string[] = value.split(/\s+as\s+/i);
+
+        return `${this.wrapTable(segments[0])} as ${this.wrapValue(this.tablePrefix + segments[1])}`;
+    }
+
+    protected wrapSegments(segments: string[]): string {
+        return segments
+            .map((value: string, index: number) => {
+                return index === 0 && segments.length > 1
+                    ? this.wrapTable(value)
+                    : this.wrapValue(value);
+            })
+            .join('.');
+    }
+
     protected wrapValue(value: string): string {
         if (value !== '*') {
             return '`' + value.replace(/"/g, '""') + '`';
