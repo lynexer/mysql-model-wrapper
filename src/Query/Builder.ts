@@ -149,6 +149,10 @@ export class Builder {
     // WhereNotIn, WhereNull, WhereNotNull, WhereDate,
     // WhereMonth, WhereDay, WhereYear, WhereTime
 
+    public toSql(): string {
+        return this.grammar.compileSelect(this);
+    }
+
     public async get(): Promise<[RowDataPacket[], FieldPacket[]]> {
         let query = `SELECT ${this.selects.join(',')} FROM ${this.table}`;
         console.log(query);
