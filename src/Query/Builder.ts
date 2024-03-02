@@ -144,6 +144,20 @@ export class Builder {
         return this;
     }
 
+    public orWhere(
+        column: string | WhereColumnParameter[],
+        operator: any = null,
+        value: any = null
+    ): this {
+        [value, operator] = this.prepareValueAndOperator(
+            value,
+            operator,
+            value === null && operator !== null
+        );
+
+        return this.where(column, operator, value, 'or');
+    }
+
     // TODO: Added Basic Where Clauses:
     // Where, OrWhere, WhereNot, WhereBetween, WhereIn,
     // WhereNotIn, WhereNull, WhereNotNull, WhereDate,
