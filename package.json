@@ -9,7 +9,9 @@
         "README.md"
     ],
     "scripts": {
-        "build": "rimraf build && tsc"
+        "build": "rimraf build && tsc",
+        "prettier": "prettier . --write",
+        "prettier:check": "prettier . --check"
     },
     "repository": {
         "type": "git",
