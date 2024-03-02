@@ -7,6 +7,7 @@ type WhereColumnParameter = [string, any, any?];
 
 export class Builder {
     protected connection: Connection;
+    public grammar: MySqlGrammar;
     public table: string = '';
     public selects: string[] = ['*'];
     public wheres: WhereInfo[] = [];
@@ -48,8 +49,9 @@ export class Builder {
         '!~~*'
     ];
 
-    constructor(connection: Connection) {
+    constructor(connection: Connection, grammar: MySqlGrammar | null = null) {
         this.connection = connection;
+        this.grammar = grammar ?? this.connection.getQueryGrammar();
     }
 
     public from(table: string, as: string | null = null): this {
